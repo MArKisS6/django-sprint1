@@ -4,8 +4,11 @@ app_name = 'pages'
 
 
 def about(request):
-    return render(request, 'pages/about.html', {'title': 'О проекте'})
+    template = 'pages/about.html'
+    return render(request, template)
 
 
 def rules(request):
-    return render(request, 'pages/rules.html', {'title': 'Правила сайта'})
+    template = 'pages/rules.html'
+    return render(request, template)
+

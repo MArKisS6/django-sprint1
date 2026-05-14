@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import Http404
 
 # Create your views here.
 posts = [
@@ -46,39 +45,20 @@ posts = [
 ]
 
 
+def category_posts(request, pk):
+    template = 'blog/category.html'
+    context = {'post': posts[pk]}
+    return render(request, template, context)
+
+
 def index(request):
-    context = {
-        'posts': posts,
-        'title': 'Все публикации',
-    }
-    return render(request, 'blog/index.html', context)
+    template = 'blog/index.html'
+    context = {'post_list': posts}
+    return render(request, template, context)
 
 
 def post_detail(request, id):
-    try:
-        # Ищем пост по ID. Если не найден, генерируем ошибку 404.
-        post = next(p for p in posts if p['id'] == id)
-    except StopIteration:
-        raise Http404("Пост с указанным ID не найден.")
-    context = {
-        'post': post,
-        'title': f"{post['location']} - {post['date']}",
-    }
-    return render(request, 'blog/detail.html', context)
+    template = 'blog/detail.html'
+    context = {'post': posts[id]}
+    return render(request, template, context)
 
-
-def category_posts(request, category_slug):
-    # Фильтруем посты по переданному 'category_slug'
-    filtered_posts = [p for p in posts if p['category'] == category_slug]
-    if not filtered_posts:
-        # Если постов в данной категории нет, генерируем ошибку 404.
-        raise Http404(
-            f"Категория '{category_slug}' не найдена или не содержит постов."
-        )
-
-    context = {
-        'posts': filtered_posts,
-        'title': f'Посты категории: {category_slug}',
-        'category_slug': category_slug,
-    }
-    return render(request, 'blog/category.html', context)
