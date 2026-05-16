@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-
+from django.shortcuts import render
+from django.http import Http404
 
 posts = [
     {
@@ -50,11 +50,15 @@ def index(request):
 
 
 def post_detail(request, post_id):
-    post = get_object_or_404(posts, id=post_id)
+    try:
+        post = next(p for p in posts if p['id'] == post_id)
+    except StopIteration:
+        raise Http404("Запись блога с таким ID не найдена.")
     return render(request, 'blog/detail.html', {'post': post})
 
 
 def category_posts(request, category_slug):
+
     filtered_posts = [
         post
         for post in posts
