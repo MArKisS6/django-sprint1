@@ -53,7 +53,7 @@ def post_detail(request, post_id):
     try:
         post = next(p for p in posts if p['id'] == post_id)
     except StopIteration:
-        raise Http404("Запись блога с таким ID не найдена.")
+        raise Http404('Запись блога с таким ID не найдена.')
     return render(request, 'blog/detail.html', {'post': post})
 
 
