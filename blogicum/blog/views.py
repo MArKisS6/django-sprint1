@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import Http404
 
-posts = [
-    {
+POSTS_DICT = {
+    0: {
         'id': 0,
         'location': 'Остров отчаянья',
         'date': '30 сентября 1659 года',
@@ -14,7 +14,7 @@ posts = [
                 полумёртвым на берег этого проклятого острова,
                 который назвал островом Отчаяния.''',
     },
-    {
+    1: {
         'id': 1,
         'location': 'Остров отчаянья',
         'date': '1 октября 1659 года',
@@ -30,7 +30,7 @@ posts = [
                 построить баркас, на котором и выбрались бы из этого
                 гиблого места.''',
     },
-    {
+    2: {
         'id': 2,
         'location': 'Остров отчаянья',
         'date': '25 октября 1659 года',
@@ -42,34 +42,33 @@ posts = [
                 Весь этот день я хлопотал  около вещей: укрывал и
                 укутывал их, чтобы не испортились от дождя.''',
     },
-]
+}
+
+POSTS_LIST = list(POSTS_DICT.values())
 
 
 def index(request):
-    return render(request, 'blog/index.html', {'posts': posts})
+    return render(request, 'blog/index.html', {'posts': POSTS_LIST})
 
 
 def post_detail(request, post_id):
-    try:
-        post = next(p for p in posts if p['id'] == post_id)
-    except StopIteration:
+    post = POSTS_DICT.get(post_id)
+    if post is None:
         raise Http404('Запись блога с таким ID не найдена.')
     return render(request, 'blog/detail.html', {'post': post})
 
 
 def category_posts(request, category_slug):
-
     filtered_posts = [
         post
-        for post in posts
+        for post in POSTS_LIST
         if post['category'] == category_slug
     ]
-
     return render(
         request,
         'blog/category.html',
         {
             'posts': filtered_posts,
-            'category_slug': category_slug
+            'category_slug': category_slug,
         }
     )

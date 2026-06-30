@@ -1,9 +1,13 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}
   Публикации в категории {{ category_slug }}
 {% endblock %}
 {% block content %}
-  <div class='container py-5'>
-    <h1>Публикации в категории {{ category_slug }}</h1>   
-  </div>
+  <h1>Публикации в категории {{ category_slug }}</h1>
+  {% for post in posts %}
+    {% include "includes/post_card.html" %}
+    {% if not forloop.last %}<hr>{% endif %}
+  {% empty %}
+    <p>В этой категории пока нет публикаций.</p>
+  {% endfor %}
 {% endblock %}
