@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import Http404
 
-POSTS_DICT = {
-    0: {
+posts = [
+    {
         'id': 0,
         'location': 'Остров отчаянья',
         'date': '30 сентября 1659 года',
@@ -14,7 +14,7 @@ POSTS_DICT = {
                 полумёртвым на берег этого проклятого острова,
                 который назвал островом Отчаяния.''',
     },
-    1: {
+    {
         'id': 1,
         'location': 'Остров отчаянья',
         'date': '1 октября 1659 года',
@@ -30,7 +30,7 @@ POSTS_DICT = {
                 построить баркас, на котором и выбрались бы из этого
                 гиблого места.''',
     },
-    2: {
+    {
         'id': 2,
         'location': 'Остров отчаянья',
         'date': '25 октября 1659 года',
@@ -42,13 +42,14 @@ POSTS_DICT = {
                 Весь этот день я хлопотал  около вещей: укрывал и
                 укутывал их, чтобы не испортились от дождя.''',
     },
-}
+]
 
-POSTS_LIST = list(POSTS_DICT.values())
+# Словарь для быстрого доступа к постам по id (для post_detail)
+POSTS_DICT = {post['id']: post for post in posts}
 
 
 def index(request):
-    return render(request, 'blog/index.html', {'posts': POSTS_LIST})
+    return render(request, 'blog/index.html', {'posts': posts})
 
 
 def post_detail(request, post_id):
@@ -61,7 +62,7 @@ def post_detail(request, post_id):
 def category_posts(request, category_slug):
     filtered_posts = [
         post
-        for post in POSTS_LIST
+        for post in posts
         if post['category'] == category_slug
     ]
     return render(
