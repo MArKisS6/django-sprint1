@@ -8,8 +8,9 @@
   </ul>
   <p>
     {% if request.resolver_match.view_name == 'blog:index' %}
+      <a href="{% url 'blog:post_detail' post.id %}">Читать полный текст</a>
       {{ post.text|truncatewords:10 }}
-    {% else %}
+    {% elif  %} 
       {{ post.text|linebreaksbr }}
     {% endif %}
   </p>

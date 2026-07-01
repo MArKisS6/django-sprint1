@@ -4,10 +4,4 @@
 {% endblock %}
 {% block content %}
   <h1>Публикации в категории {{ category_slug }}</h1>
-  {% for post in posts %}
-    {% include "includes/post_card.html" %}
-    {% if not forloop.last %}<hr>{% endif %}
-  {% empty %}
-    <p>В этой категории пока нет публикаций.</p>
-  {% endfor %}
 {% endblock %}

@@ -6,6 +6,6 @@
   <h1>Лента записей</h1>
   {% for post in posts|dictsortreversed:"id" %}
     {% include "includes/post_card.html" %}
-    {% if not forloop.last %}<hr>{% endif %}
   {% endfor %}
+  <hr>
 {% endblock %}

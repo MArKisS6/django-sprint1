@@ -45,7 +45,7 @@ posts = [
 ]
 
 # Словарь для быстрого доступа к постам по id (для post_detail)
-POSTS_DICT = {post['id']: post for post in posts}
+posts_id = {post['id']: post for post in posts}
 
 
 def index(request):
