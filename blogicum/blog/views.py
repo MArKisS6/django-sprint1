@@ -53,7 +53,7 @@ def index(request):
 
 
 def post_detail(request, post_id):
-    post = POSTS_DICT.get(post_id)
+    post = posts_id.get(post_id)
     if post is None:
         raise Http404('Запись блога с таким ID не найдена.')
     return render(request, 'blog/detail.html', {'post': post})
