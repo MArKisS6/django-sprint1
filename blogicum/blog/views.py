@@ -60,16 +60,10 @@ def post_detail(request, post_id):
 
 
 def category_posts(request, category_slug):
-    filtered_posts = [
-        post
-        for post in posts
-        if post['category'] == category_slug
-    ]
     return render(
         request,
         'blog/category.html',
         {
-            'posts': filtered_posts,
             'category_slug': category_slug,
         }
     )
